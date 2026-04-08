@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Call API</title>
+    <!-- link tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- link api -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"
+      integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- phần header -->
+    <header class="shadow-xl flex justify-between items-center p-6 bg-pink-200">
+      <h1 class="text-2xl font-bold text-blue-600">Phone Store</h1>
+      <div class="flex items-center p-6">
+        <a
+          href="./APIadmin.html"
+          class="underline text-sm text-gray-700 hover:text-blue-600 mr-2"
+          >Admin</a
+        >
+        <button
+          id="btnGioHang"
+          class="relative px-3 py-2 border-pink-200 bg-blue-400 rounded text-white"
+        >
+          Giỏ Hàng
+          <span
+            id="bangeGioHang"
+            class="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex justify-center items-center"
+            >0</span
+          >
+        </button>
+      </div>
+    </header>
+    <!-- phần tìm kiếm sản phẩm -->
+    <main class="max-w-[1440px] mx-auto px-4 py-6 bg-yellow-300">
+      <div class="flex items-center">
+        <!-- search sản phẩm -->
+        <div class="flex flex-col w-full p-6">
+          <label for="">Tìm Kiếm Sản Phẩm</label>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Tìm kiếm sản phẩm , mô tả , loại, ......."
+            class="px-4 py-2 w-full border rounded-md"
+          />
+        </div>
+        <!-- thêm chọn các loại đt -->
+        <select
+          name="phone"
+          id="filterSelect"
+          class="flex items-center mt-6 rounded-md px-4 py-2 border flex ml-5"
+        >
+          <option value="">Tất Cả Các Loại</option>
+          <option value="iphone">iphone</option>
+          <option value="samsung">samsung</option>
+          <!-- các loại khác thêm sau -->
+        </select>
+      </div>
+      <!-- loading spinner Call API -->
+      <p
+        id="loading"
+        class="hidden text-2xl text-blue-700 flex items-center justify-center"
+      >
+        Đang Tải Sản Phẩm.....
+      </p>
+      <!-- data chưa danh sách sản phẩm sử dụng javascript call API -->
+      <div
+        id="danhSachSP"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        <!-- decore ở đây -->
+      </div>
+    </main>
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!-- popup xem chi tiết sản phẩm khi user click show  -->
+    <div
+      id="popupChiTiet"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center"
+    >
+      <!-- overlay -->
+      <div id="overlayXemChiTiet" class="absolute inset-0 bg-black/50"></div>
+      <!-- nội dung xem chi tiết sản phẩm -->
+      <div class="relative">
+        <button
+          id="btnCloseXemChiTiet"
+          class="absolute top-0 right-0 border text-white bg-red-500 hover:text-black px-2 py-1"
+          onclick="closePopupChiTiet()"
+        >
+          X
+        </button>
+        <div
+          id="popupContent"
+          class="p-6 bg-white rounded shadow-lg max-h-[90vh] w-full"
+        ></div>
+      </div>
+    </div>
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!-- popup giỏ hàng khi user click show  -->
+    <div
+      id="popupGioHang"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center"
+    >
+      <!-- overlayGioHang -->
+      <div id="overlayGioHang" class="absolute inset-0 bg-black/50"></div>
+      <!-- nội dung giỏ hàng -->
+      <div class="relative p-6 bg-white rounded shadow w-full h-auto">
+        <button
+          id="btnCloseGioHang"
+          class="absolute top-0 right-0 border bg-red-500 text-white hover:text-black px-2 py-1"
+          onclick="btnCloseNoiDungGioHang()"
+        >
+          X
+        </button>
+        <div id="noiDungGioHang" class="p-6"></div>
+      </div>
+    </div>
+    <!-- script -->
+    <script src="../javascript/LTAPI.js"></script>
+  </body>
+</html>
