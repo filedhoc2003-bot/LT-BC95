@@ -3,130 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Call API</title>
-    <!-- link tailwind -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- link api -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"
-      integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <title>Premium Phone Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
   </head>
-  <body class="min-h-screen">
-    <!-- phần header -->
-    <header class="shadow-xl flex justify-between items-center p-6 bg-pink-200">
-      <h1 class="text-2xl font-bold text-blue-600">Phone Store</h1>
-      <div class="flex items-center p-6">
-        <a
-          href="./APIadmin.html"
-          class="underline text-sm text-gray-700 hover:text-blue-600 mr-2"
-          >Admin</a
+  <body class="bg-slate-50 min-h-screen font-sans">
+    <header
+      class="sticky top-0 z-40 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100"
+    >
+      <div
+        class="max-w-7xl mx-auto flex justify-between items-center p-4 md:px-8"
+      >
+        <h1
+          class="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent"
         >
-        <button
-          id="btnGioHang"
-          class="relative px-3 py-2 border-pink-200 bg-blue-400 rounded text-white"
-        >
-          Giỏ Hàng
-          <span
-            id="bangeGioHang"
-            class="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white rounded-full flex justify-center items-center"
-            >0</span
+          PhoneStore
+        </h1>
+        <div class="flex items-center gap-6">
+          <a
+            href="../html/APIadmin.html"
+            class="font-medium text-gray-600 hover:text-blue-600 transition-colors"
+            >Admin Portal</a
           >
-        </button>
+          <button
+            id="btnGioHang"
+            class="group relative p-2 bg-blue-50 hover:bg-blue-100 rounded-full transition-all"
+          >
+            <i class="fa-solid fa-cart-shopping text-blue-600 text-xl"></i>
+            <span
+              id="bangeGioHang"
+              class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex justify-center items-center shadow-md"
+              >0</span
+            >
+          </button>
+        </div>
       </div>
     </header>
-    <!-- phần tìm kiếm sản phẩm -->
-    <main class="max-w-[1440px] mx-auto px-4 py-6 bg-yellow-300">
-      <div class="flex items-center">
-        <!-- search sản phẩm -->
-        <div class="flex flex-col w-full p-6">
-          <label for="">Tìm Kiếm Sản Phẩm</label>
-          <input
-            type="search"
-            id="searchInput"
-            placeholder="Tìm kiếm sản phẩm , mô tả , loại, ......."
-            class="px-4 py-2 w-full border rounded-md"
-          />
-        </div>
-        <!-- thêm chọn các loại đt -->
-        <select
-          name="phone"
-          id="filterSelect"
-          class="flex items-center mt-6 rounded-md px-4 py-2 border flex ml-5"
-        >
-          <option value="">Tất Cả Các Loại</option>
-          <option value="iphone">iphone</option>
-          <option value="samsung">samsung</option>
-          <!-- các loại khác thêm sau -->
-        </select>
-      </div>
-      <!-- loading spinner Call API -->
-      <p
-        id="loading"
-        class="hidden text-2xl text-blue-700 flex items-center justify-center"
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+      <div
+        class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row gap-4 items-end"
       >
-        Đang Tải Sản Phẩm.....
-      </p>
-      <!-- data chưa danh sách sản phẩm sử dụng javascript call API -->
+        <div class="flex-1 w-full">
+          <label class="block text-sm font-semibold text-gray-700 mb-2 ml-1"
+            >Tìm kiếm sản phẩm</label
+          >
+          <div class="relative">
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="Tên máy, mô tả..."
+              class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all"
+            />
+          </div>
+        </div>
+        <div class="w-full md:w-64">
+          <label class="block text-sm font-semibold text-gray-700 mb-2 ml-1"
+            >Thương hiệu</label
+          >
+          <select
+            id="filterSelect"
+            class="w-full px-4 py-2.5 bg-gray-50 border border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 outline-none appearance-none"
+          >
+            <option value="">Tất cả các loại</option>
+            <option value="iphone">iPhone</option>
+            <option value="samsung">Samsung</option>
+            <option value="xiaomi">xiaomi</option>
+            <option value="oppo">oppo</option>
+            <option value="realme">realme</option>
+            <option value="nokia">nokia</option>
+            <option value="asus">asus</option>
+            <option value="vivo">vivo</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="loading" class="hidden py-20 text-center">
+        <div
+          class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"
+        ></div>
+        <p class="mt-4 text-gray-500 font-medium tracking-wide">
+          Đang tải siêu phẩm...
+        </p>
+      </div>
+
       <div
         id="danhSachSP"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-      >
-        <!-- decore ở đây -->
-      </div>
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+      ></div>
     </main>
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!-- popup xem chi tiết sản phẩm khi user click show  -->
+
     <div
       id="popupChiTiet"
-      class="hidden fixed inset-0 z-50 flex items-center justify-center"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <!-- overlay -->
-      <div id="overlayXemChiTiet" class="absolute inset-0 bg-black/50"></div>
-      <!-- nội dung xem chi tiết sản phẩm -->
-      <div class="relative">
+      <div
+        id="overlayXemChiTiet"
+        class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+        onclick="closePopupChiTiet()"
+      ></div>
+      <div
+        class="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden transform transition-all"
+      >
         <button
-          id="btnCloseXemChiTiet"
-          class="absolute top-0 right-0 border text-white bg-red-500 hover:text-black px-2 py-1"
+          id="btnclose"
           onclick="closePopupChiTiet()"
+          class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-red-500 hover:text-white transition-all z-10"
         >
-          X
+          <i class="fa-solid fa-xmark"></i>
         </button>
-        <div
-          id="popupContent"
-          class="p-6 bg-white rounded shadow-lg max-h-[90vh] w-full"
-        ></div>
+        <div id="popupContent" class="p-8"></div>
       </div>
     </div>
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!-- popup giỏ hàng khi user click show  -->
+
     <div
       id="popupGioHang"
-      class="hidden fixed inset-0 z-50 flex items-center justify-center"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <!-- overlayGioHang -->
-      <div id="overlayGioHang" class="absolute inset-0 bg-black/50"></div>
-      <!-- nội dung giỏ hàng -->
-      <div class="relative p-6 bg-white rounded shadow w-full h-auto">
-        <button
-          id="btnCloseGioHang"
-          class="absolute top-0 right-0 border bg-red-500 text-white hover:text-black px-2 py-1"
-          onclick="btnCloseNoiDungGioHang()"
+      <div
+        id="overlayGioHang"
+        class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+        onclick="btnCloseNoiDungGioHang()"
+      ></div>
+      <div
+        class="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden"
+      >
+        <div
+          class="p-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0"
         >
-          X
-        </button>
-        <div id="noiDungGioHang" class="p-6"></div>
+          <h2 class="text-2xl font-bold text-gray-800">Giỏ hàng của bạn</h2>
+          <button
+            onclick="btnCloseNoiDungGioHang()"
+            class="text-gray-400 hover:text-gray-600 text-2xl"
+          >
+            &times;
+          </button>
+        </div>
+        <div
+          id="noiDungGioHang"
+          class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50/50"
+        ></div>
+        <div
+          class="p-6 border-t border-gray-100 bg-white flex justify-between items-center"
+        >
+          <div>
+            <p class="text-sm text-gray-500">Tổng thanh toán:</p>
+            <p id="tongTien" class="text-2xl font-black text-blue-600">0đ</p>
+          </div>
+          <button
+            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-blue-200 active:scale-95"
+          >
+            Thanh toán
+          </button>
+        </div>
       </div>
     </div>
-    <!-- script -->
-    <script src="../javascript/LTAPI.js"></script>
+    <script type="module" src="../javascript/LTAPI.js"></script>
   </body>
 </html>
